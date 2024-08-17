@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    
+
+    <div class="topnav" id="myTopnav">
+        <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBrwkuniCAWPapvRKlKlU7wDq4ecsVvB4LBQ&s">
+        <a href="/admin_add_student">Add Student</a>
+        <a href="/admin_add_company">Add companies</a>
+        <a href="/admin_students">students</a>
+        <a href="/admin_company">companies</a>
+        <a href="/admin_stats">stats</a>
+        <a href="/log_out">Log out</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      
+      <script>
+        function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+        }
+      </script>
+
+        
+        <%if(locals.e){%>
+            <h2>Welcome</h2>
+            <img class="main" src="https://www.iitp.ac.in/images/photo/incubation-center-top.jpg" >
+        <%}%>
+
+
+        <% if (locals.z) { %>
+            <form action="/admin_stats" method="post" class="branch-form">
+                <label for="specialisation" class="branch-form-label">Branch:</label>
+                <select class="branch-form-select" id="specialisation" name="specialisation" required>
+                    <option value="All">All</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Civil">Civil</option>
+                    <option value="Metallurgy">Metallurgy</option>
+                </select>
+                <input type="submit" value="Submit" class="branch-submit-button">
+            </form>
+        <% } %>
+        
+        
+        <% if (locals.f) { %>
+            <div class="stats">
+                <p><strong>Total:</strong> <%= total %></p>
+                <p><strong>Placed:</strong> <%= placed %></p>
+                <p><strong>Maximum Package:</strong> <%= max_package %></p>
+                <p><strong>Minimum Package:</strong> <%= min_package %></p>
+                <p><strong>Average Package:</strong> <%= avg_package %></p>
+            </div>
+        <% } %>
+        
+
+
+        <%if(locals.add_student){%>
+            <form action="/admin_add_student" method="POST" class="student-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" id="name" name="name" maxlength="100" class="form-input" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" maxlength="100" class="form-input" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="specialisation" class="form-label">Specialisation:</label>
+                    <select class="form-select" id="specialisation" name="specialisation" required>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Metallurgy">Metallurgy</option>
+                    </select>
+                </div>
+        
+                <div class="form-group">
+                    <label for="semester" class="form-label">Semester:</label>
+                    <input type="number" id="semester" name="semester" class="form-input" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="CPI" class="form-label">CPI:</label>
+                    <input type="number" step="0.01" id="CPI" name="CPI" class="form-input" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="year" class="form-label">Year:</label>
+                    <input type="number" id="year" name="year" class="form-input" required>
+                </div>
+        
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="submit-button">
+                </div>
+            </form>
+        <%}%>
+
+
+
+        <%if(locals.add_company){%>
+            <% if (locals.err) { %>
+                <p class="error-message"><%= err %></p>
+            <% } %>
+        
+            <form action="/admin_add_company" method="POST" class="student-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Company Name:</label>
+                    <input type="text" id="name" name="name" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="submit-button">Register</button>
+                </div>
+            </form>
+        <%}%>
+
+
+
+
+
+        
+        <%if(locals.total_student){%>
+            
+            <div class="moo">
+            
+            <form action="/admin_students" method="post" class="branch-form2">
+                <label for="specialisation" class="branch-form-label">Branch:</label>
+                <select class="branch-form-select" id="specialisation" name="specialisation" required>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Civil">Civil</option>
+                    <option value="Metallurgy">Metallurgy</option>
+                </select>
+                <input type="submit" value="Submit" class="branch-submit-button">
+            </form>
+
+
+            <div class="search-container">
+                <form action="/admin_students_search" method="POST" class="search-form">
+                    <label for="search" class="search-label">Search:</label>
+                    <input type="text" id="search" name="search" placeholder="Search by name or branch" required class="search-input">
+                    <button type="submit" class="search-button">Submit</button>
+                </form>
+            </div>
+        
+
+            </div>
+
+            <div class="students">
+            <div class="total_students">
+                <h2>All Students</h2>
+                <%if(total_student.length>0){
+                for(var i=0;i<total_student.length;i++){%>
+                    <div class="none">
+                    <p><strong>Name: </strong><%= total_student[i].name %></p>
+                    <p><strong>Email: </strong><%= total_student[i].email %></p>
+                    <p><strong>Branch: </strong><%= total_student[i].specialisation %></p>
+                    <p><strong>Mobile no:</strong><%= total_student[i].mobile%></p>
+                    <p><strong>CPI:</strong><%= total_student[i].cpi%></p>
+                    <p><strong>Year:</strong><%= total_student[i].year%></p>
+                    <p><strong>10th percentage:</strong><%= total_student[i].percentage10%></p>
+                    <p><strong>12th percentage</strong><%= total_student[i].percentage12%></p>
+                    <form action="/admin_delete_student/<%= total_student[i].id %>" method="post">
+                        <button type="submit">delete</button>
+                    </form>
+                    </div>
+                <%}}else{%>
+                    <p>No student has been added</p>
+                <%}%>
+            </div>
+            <div class="student_placed">
+                <h2>Placed Students</h2>
+                <%if(placed_student.length>0){
+                for(var i=0;i<placed_student.length;i++){%>
+                    <div class="none">
+                    <p><strong>Name: </strong> <%= placed_student[i].student_name %> </p>
+                    <p><strong>Email: </strong> <%= placed_student[i].student_email %> </p>
+                    <p><strong>Branch: </strong> <%= placed_student[i].student_specialisation %> </p>
+                    <p><strong>Company: </strong> <%= placed_student[i].company_name %> </p>
+                    <p><strong>Package: </strong> <%= placed_student[i].ctc %> </p>
+                    <p><strong>role: </strong> <%= placed_student[i].roles %> </p>
+                    </div>
+                <%}}else{%>
+                    <p>No Student has been placed</p>
+                <%}%>
+                </div>
+            </div>
+        <%}%>
+
+
+
+
+
+        <div class="more">
+        <div class="one">
+        <%if(locals.company){%>
+        <h2 class="company-heading">Companies</h2>
+        <%for(var i=0; i<company.length; i++){%>
+            <div class="nono">
+            <a href="/admin_company_jobs/<%=company[i].company_id%>" class="company-link">
+                <p class="company-name"><%= company[i].name %></p>
+            </a>
+            <form action="/admin_company_delete/<%=company[i].company_id%>" method="get">
+                <button type="submit" class="ro"><i class="fas fa-trash"></i></button>
+            </form>
+            </div>
+        <%}}%>     
+    
+        </div>
+        
+        <div class="two">
+        <% if(locals.jobs){%>
+        <%for(var i=0;i<jobs.length;i++){%>   
+            <div class="three">
+                <p><strong>Role:</strong> <%= jobs[i].roles %></p>
+                <p><strong>CTC:</strong> <%= jobs[i].ctc %> lakhs</p>
+                <p><strong>Minimum CPI:</strong> <%= jobs[i].minimum_cpi %></p>
+                <p><strong>Interview Mode:</strong> <%= jobs[i].interview_mode %></p>
+                <form action="/admin_job_delete/<%= jobs[i].jobid %>" method="get">
+                        <button type="submit">delete</button>
+                    </form>
+            </div>
+        <%}%>
+    <%}%>
+        </div>
+        </div>
+        
+
+
+</body>
+</html>

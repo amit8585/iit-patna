@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/company.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+ 
+    <div class="topnav" id="myTopnav">
+        <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBrwkuniCAWPapvRKlKlU7wDq4ecsVvB4LBQ&s">
+    <a href="/company_add_jobs/<%= id %>">Add Job</a>
+    <a href="/company_jobs_added">Jobs Added</a>
+    <a href="/company_jobs_applied/<%= id %>">Students Applied</a>
+    <a href="/company_selected">Selected</a>
+    <a href="/company_forget">Forget password</a>
+    <a href="/log_out">Log out</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      
+    <script>
+        function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+        }
+    </script>
+    
+
+
+    
+    <%if(locals.company_name){%>
+        <h2>Welcome <%=company_name%></h2>
+    <%}%>
+
+    <% if (locals.job1) { %>
+        <% for (var i = 0; i < job1.length; i++) { %>
+            <div class="jobs_applied">
+                <p><strong>Role:</strong> <%= job1[i].roles %></p>
+                <p><strong>CTC:</strong> <%= job1[i].ctc %></p>
+                <p><strong>Minimum CPI:</strong> <%= job1[i].minimum_cpi %></p>
+                <p><strong>Interview Mode:</strong> <%= job1[i].interview_mode %></p>
+            </div>
+        <% } %>
+    <% } %>
+
+    <div class="more">
+    <div class="one">
+        <% if (locals.jobs) { %>
+            <p class="choose-job-title">Choose a job</p>
+            <% for (var i = 0; i < jobs.length; i++) { %>
+                <a class="job-link" href="/company_students_applied/<%= id %>/<%= jobs[i].jobid %>">
+                    <p class="job-role"><%= jobs[i].roles %></p>
+                </a>
+            <% } %>
+        <% } %>
+    </div>
+
+
+    <div class="two">
+        <% if (locals.student) { %>
+            <% if(student.length>0){%>
+            <div class="four">
+            <form action="/company_shortlist/<%= job_id %>" method="POST" class="branch-form">
+                <div class="form-group">
+                    <label for="branch" class="form-label">Branch:</label>
+                    <select class="form-select" id="branch" name="branch" required>
+                        <option value="All">All</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Metallurgy">Metallurgy</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cpi" class="form-label">CPI:</label>
+                    <input type="number" id="cpi" name="cpi" step="0.01" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="submit-button">Submit</button>
+                </div>
+            </form>
+            </div>
+
+
+            <% for (var i = 0; i < student.length; i++) { %>
+                <div class="three">
+                    <p><strong>Name:</strong> <%= student[i].name %></p>
+                    <p><strong>Email:</strong> <%= student[i].email %></p>
+                    <p><strong>Mobile no:</strong> <%= student[i].mobile %></p>
+                    <p><strong>Branch:</strong> <%= student[i].specialisation %></p>
+                    <p><strong>CPI:</strong> <%= student[i].cpi %></p>
+                    <p><strong>10th Percentage:</strong> <%= student[i].percentage10 %></p>
+                    <p><strong>12th Percentage:</strong> <%= student[i].percentage12 %></p>
+                    <form action="/company_placed/<%= student[i].id %>/<%= job_id %>" method="get">
+                        <button type="submit" class="form-button">Select</button>
+                    </form>
+                </div>
+            <% }}else{%>
+                <p>No student has applied for the job</p>
+            <%}%>
+        <% } %>
+    </div>
+    </div>
+
+
+    <% if (locals.z) { %>
+        <h2 class="form-title">Add a new Job</h2>
+        <form class="registration-form" action="/submit_job/<%= id %>" method="post">
+            <label class="form-label" for="minimum_cpi">Minimum CPI:</label>
+            <input class="form-input" type="text" id="minimum_cpi" name="minimum_cpi" required>
+    
+            <label class="form-label" for="roles">Role:</label>
+            <input class="form-input" type="text" id="roles" name="roles" required>
+    
+            <label class="form-label" for="ctc">CTC:</label>
+            <input class="form-input" type="number" step="0.01" id="ctc" name="ctc" required>
+    
+            <label class="form-label" for="interview_mode">Interview Mode:</label>
+            <select class="form-select" id="interview_mode" name="interview_mode" required>
+                <option value="Online">Online</option>
+                <option value="Offline">Offline</option>
+            </select>
+    
+            <button class="form-button" type="submit">Submit</button>
+        </form>
+    <% } %>
+    
+
+
+    <% if (locals.selected) {
+        if (selected.length > 0) {
+            for (var i = 0; i < selected.length; i++) { %>
+                <div class="jobs_applied">
+                    <p><strong>Name:</strong> <%= selected[i].name %></p>
+                    <p><strong>Email:</strong> <%= selected[i].email %></p>
+                    <p><strong>Branch:</strong> <%= selected[i].specialisation %></p>
+                    <p><strong>Mobile No:</strong> <%= selected[i].mobile %></p>
+                    <p><strong>Role:</strong> <%= selected[i].roles %></p>
+                    <p><strong>CTC:</strong> <%= selected[i].ctc %></p>
+                </div>
+            <% }
+        } else { %>
+            <p>No one is selected</p>
+        <% }
+    } %>
+    
+
+
+    <%if(locals.company_forget){%>
+    <h2 class="ha">Reset Your Password</h2>
+    <%if(locals.err){%>
+        <p class="error-message"><%= err %></p>
+    <%}%>
+    <form action="/company_forget" method="POST" class="reset-password-form">
+        <div class="form-group">
+            <label for="password">New Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+<%}%>
+
+
+    <%if(locals.e){%>
+        <img class="main" src="https://www.iitp.ac.in/images/photo/incubation-center-top.jpg" >
+    <%}%>
+
+
+</body>
+</html>

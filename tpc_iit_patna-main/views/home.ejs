@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+
+    <div class="topnav" id="myTopnav">
+        <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBrwkuniCAWPapvRKlKlU7wDq4ecsVvB4LBQ&s">
+        <a href="/student">Students</a>
+        <a href="/company">Company</a>
+        <a href="/alumni">Alumni</a>
+        <a href="/admin">Admin</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      
+      <script>
+        function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+        }
+      </script>
+
+
+
+
+    <h1>Training and placement cell IIT Patna</h1>
+    <% if (locals.z) { %>
+        <% if (z == 1) { %> 
+            <div class="login-container">
+                <h2>Student Login</h2>
+                <form action="/student_login" method="POST">  
+                    <input type="text" id="email" name="email" placeholder="Email" required>                   
+                    <input type="password" id="password" name="password" placeholder="password" required>     
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        <% } else if (z == 2) { %> 
+            <div class="login-container">
+                <h2>Company Login</h2>
+                <form action="/company_login" method="POST">
+                    <input type="text" id="email" name="email" placeholder="Email" required>                   
+                    <input type="password" id="password" name="password" placeholder="password" required>     
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        <% } else if (z == 3) { %> 
+            <div class="login-container">
+                <h2>Alumni Login</h2>
+                <form action="/alumni_login" method="POST">
+                    <input type="text" id="email" name="email" placeholder="Email" required>                   
+                    <input type="password" id="password" name="password" placeholder="password" required>     
+                    <button type="submit">Login</button>
+                </form>
+                <a href="/alumni_form" >register</a>
+            </div>
+        <% } else if (z == 4) { %> 
+            <div class="login-container">
+                <h2>Admin Login</h2>
+                <form action="/admin_login" method="POST">                   
+                    <input type="text" id="email" name="email" placeholder="Email" required>               
+                    <input type="password" id="password" name="password" placeholder="password" required>
+                    <button type="submit">Login</button>
+                </form>
+                
+            </div>
+        <% } %>
+    <% }else{%>
+        <img class="main" src="https://www.iitp.ac.in/images/photo/incubation-center-top.jpg" >
+    <%}%>
+
+
+</body>
+</html>
