@@ -1,5 +1,5 @@
 
-http://tpc-iit-patna-1.onrender.com/
+https://tpc-iit-patna.onrender.com/
 
 Placement Portal of IIT patna
 
